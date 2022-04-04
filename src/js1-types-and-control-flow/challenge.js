@@ -19,7 +19,8 @@ const firstName = "John";
 const lastName = "Smith";
 
 export const createFullName = () => {
-  // Write your code here
+  const fullName = firstName + " " + lastName;
+  return fullName;
 };
 
 /**
@@ -32,7 +33,10 @@ const largeNumber1 = 100;
 const largeNumber2 = 200;
 
 export const findLargestNumber = () => {
-  // Write your code here
+  if (largeNumber1 > largeNumber2) {
+    return largeNumber1;
+  } else
+    return largeNumber2;
 };
 
 /**
@@ -45,7 +49,8 @@ const addNumber1 = 12;
 const addNumber2 = 24;
 
 export const addNumbers = () => {
-  // Write your code here
+  const sumNumbers = addNumber1 + addNumber2;
+  return sumNumbers;
 };
 
 /* Intermediate Challenges */
@@ -59,7 +64,7 @@ export const addNumbers = () => {
 const password = "thisIsMyVeryLongPassword123456789";
 
 export const findLengthOfPassword = () => {
-  // Write your code here
+  return password.length;
 };
 
 /**
@@ -75,8 +80,19 @@ export const findLengthOfPassword = () => {
 const thing = "I am a thing";
 
 export const findType = () => {
-  // Write your code here
+  const thingType = typeof thing;
+
+  if (thingType === "string") {
+    return "This is a string";
+  } else if (thingType === "number") {
+    return "This is a number";
+  } else if (thingType === "boolean") {
+    return "This is a boolean";
+  } else {
+    return "I don't know what this thing is";
+  }
 };
+
 
 /**
  * A function to programmatically decide if a name is suitable for a name tag.
@@ -88,7 +104,12 @@ export const findType = () => {
 const nameTagOption = "Timothy";
 
 export const getIsValidOnNameTag = () => {
-  // Write your code here
+  const nameLength = nameTagOption.length;
+  if (nameLength <= 8 && nameTagOption[0].toUpperCase() === nameTagOption[0]) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 /* Advanced Challenges */
