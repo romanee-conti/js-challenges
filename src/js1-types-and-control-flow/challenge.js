@@ -124,6 +124,8 @@ const stringToConvert = "14.45";
 
 export const convertStringToNumber = () => {
   // Write your code here
+  const convertedNum = parseFloat(stringToConvert);
+  return convertedNum;
 };
 
 /**
@@ -138,6 +140,8 @@ const stringWithUppercaseLetters = "I Am A String With Uppercase Letters";
 
 export const getHasUppercaseLetters = () => {
   // Write your code here
+  const hasUpperCaseLetters = /([A-Z])/g.test(stringWithUppercaseLetters);
+  return hasUpperCaseLetters;
 };
 
 /* Expert Challenge */
