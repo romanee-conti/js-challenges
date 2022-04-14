@@ -22,7 +22,15 @@
  */
 
 export const createRecipeString = (ingredientsArr) => {
-  return;
+  let recipeStr = ""
+  for (let i = 0; i < ingredientsArr.length; i++) {
+    if (i === ingredientsArr.length - 1) {
+      recipeStr += ingredientsArr[i];
+    } else {
+      recipeStr += ingredientsArr[i] + "+";
+    }
+  }
+  return recipeStr;
 };
 
 /**
@@ -33,7 +41,13 @@ export const createRecipeString = (ingredientsArr) => {
  */
 
 export const getFirstAndLastItems = (itemsArr) => {
-  return;
+  let newArr = [];
+  for (let index = 0; index < itemsArr.length; index++) {
+    if (index === 0 || index === itemsArr.length - 1) {
+      newArr.push(itemsArr[index]);
+    }
+  }
+  return newArr;
 };
 
 /**
@@ -44,7 +58,11 @@ export const getFirstAndLastItems = (itemsArr) => {
  */
 
 export const totalScores = (scoreArr) => {
-  return;
+  let totalScore = 0;
+  for (let i = 0; i < scoreArr.length; i++) {
+    totalScore += scoreArr[i];
+  }
+  return totalScore;
 };
 
 /**
@@ -60,7 +78,15 @@ export const totalScores = (scoreArr) => {
  */
 
 export const totalRange = (rangeMax) => {
-  return;
+  let rangeList = [];
+  let rangeSum = 0;
+  for (let i = 0; i <= rangeMax; i++) {
+    rangeList.push(i);
+  }
+  for (let i = 0; i < rangeList.length; i++) {
+    rangeSum += rangeList[i];
+  }
+  return rangeSum;
 };
 
 /**
@@ -71,7 +97,10 @@ export const totalRange = (rangeMax) => {
  */
 
 export const moveFirstAndLastItems = (itemsArr) => {
-  return;
+  const result = [...itemsArr];
+  const lastItem = result.pop();
+  result.unshift(lastItem);
+  return result;
 };
 
 /**
@@ -89,7 +118,11 @@ export const moveFirstAndLastItems = (itemsArr) => {
  */
 
 export const removeEvenNumbers = (numberArr) => {
-  return;
+  const newArr = [...numberArr];
+  function isOdd(num) {
+    return num % 2 != 0;
+  }
+  return newArr.filter(isOdd);
 };
 
 /**
@@ -105,7 +138,12 @@ export const removeEvenNumbers = (numberArr) => {
  */
 
 export const generateAverage = (numberArr) => {
-  return;
+  let total = 0;
+  for (let i = 0; i < numberArr.length; i++) {
+    total += numberArr[i];
+  }
+  const average = Math.round(total / numberArr.length);
+  return average || 0;
 };
 
 /**
@@ -116,7 +154,9 @@ export const generateAverage = (numberArr) => {
  */
 
 export const reverseOrder = (toReverseArr) => {
-  return;
+  let reversedArr = [...toReverseArr];
+  reversedArr.reverse();
+  return reversedArr;
 };
 
 /**
@@ -124,7 +164,7 @@ export const reverseOrder = (toReverseArr) => {
  */
 
 /**
- * Given two arrays, The first being an array of players and the second being there corresponding score. Loop through them and generate a new array matching the format below.
+ * Given two arrays, The first being an array of players and the second being their corresponding score. Loop through them and generate a new array matching the format below.
  *
  * ["P:INDEX PLAYER scored HIGHSCORE","P:INDEX PLAYER scored HIGHSCORE","P:INDEX PLAYER scored HIGHSCORE"]
  *
@@ -138,7 +178,18 @@ export const reverseOrder = (toReverseArr) => {
  */
 
 export const generateHighscores = (playersArr, scoresArr) => {
-  return;
+  let playerName = "";
+  let playerScore = 0;
+  let scores = [];
+  if (playersArr.length !== scoresArr.length || !playersArr.length) {
+    return "invalid inputs";
+  } else {
+    for (let i = 0; i < playersArr.length; i++) {
+      playerName = playersArr[i];
+      playerScore = scoresArr[i];
+      scores.push(`P:${i + 1} ${playerName} scored ${playerScore}`);
+    } return scores;
+  }
 };
 
 /**
@@ -165,8 +216,17 @@ export const generateHighscores = (playersArr, scoresArr) => {
 
 // export const encryptString = (toEncrypt) => {
 //   return;
-// };
+// }; need to turn str to array, split array into 3 arrays, then join each array individually back into a str.
 
 export const encryptString = (toEncrypt) => {
-  return;
+  const strArray = Array.from(toEncrypt);
+  let pivot = [[], [], []];
+  for (let i = 0; i < strArray.length; i++) {
+    pivot[i % 3].push(strArray[i]);
+  }
+  let encryptedStr = "";
+  for (let i = 0; i < 3; i++) {
+    encryptedStr += pivot[i].join('');
+  }
+  return encryptedStr;
 };
