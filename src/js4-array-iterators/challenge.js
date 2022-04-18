@@ -22,7 +22,8 @@
  */
 
 export const removeFalseValues = (booleanArr) => {
-  return;
+  const trueValues = booleanArr.filter((boolean) => boolean)
+  return trueValues;
 };
 
 /**
@@ -34,7 +35,8 @@ export const removeFalseValues = (booleanArr) => {
  */
 
 export const createPercentageList = (numbersArr) => {
-  return;
+  const percentages = numbersArr.map(decimal => `${decimal * 100}%`)
+  return percentages;
 };
 
 /**
@@ -47,7 +49,8 @@ export const createPercentageList = (numbersArr) => {
  */
 
 export const createListOfPoessessions = (possessionsArr, name) => {
-  return;
+  const itemSorter = possessionsArr.map(item => name + " " + item)
+  return itemSorter;
 };
 
 /**
@@ -72,7 +75,8 @@ export const createListOfPoessessions = (possessionsArr, name) => {
  */
 
 export const convertStringToNumbersArray = (numberString) => {
-  return;
+  const numberArray = numberString.split('+').map(number => parseInt(number)); // can also use Number()
+  return numberArray
 };
 
 /**
@@ -84,7 +88,14 @@ export const convertStringToNumbersArray = (numberString) => {
  */
 
 export const createOddEvenArray = (numberString) => {
-  return;
+  const numberArr = convertStringToNumbersArray(numberString);
+  let oddOrEven = []
+  numberArr.forEach(number => {
+    if (number % 2 === 0) {
+      oddOrEven.push('even')
+    } else oddOrEven.push('odd')
+  })
+  return oddOrEven;
 };
 
 /**
@@ -97,7 +108,8 @@ export const createOddEvenArray = (numberString) => {
  */
 
 export const filterBooksBySearch = (booksArr, searchTerm) => {
-  return;
+  const searchResults = booksArr.filter(book => book.includes(searchTerm));
+  return searchResults;
 };
 
 /**
@@ -117,10 +129,7 @@ export const filterBooksBySearch = (booksArr, searchTerm) => {
  */
 
 export const formatStringArray = (stringArr) => {
-  const cleanedArr = stringArr.forEach((string) => {
-    const cleanStr = string.trim().toLowerCase();
-    return cleanStr;
-  });
+  const cleanedArr = stringArr.map((string) => string.trim().toLowerCase());
 
   // console.log(???)
 
@@ -143,8 +152,12 @@ export const formatStringArray = (stringArr) => {
  */
 
 export const formatString = (string) => {
-  return;
-};
+  const cleanedStr = string.replace(/[^\w]|[\s\d]/gi, "");
+  const cleanedArr = cleanedStr
+    .split('')
+    .map((letter, index) => index % 2 === 0 ? letter.toUpperCase() : letter.toLowerCase())
+  return cleanedArr;
+}
 
 /**
  * Expert Challenge
@@ -170,5 +183,21 @@ export const formatString = (string) => {
  */
 
 export const fizzBuzz = (mixedArray) => {
-  return;
+  const cleanedArr = mixedArray
+    .map(item => parseInt(item))
+    .filter(number => number > 0 && number != NaN);
+
+  const fizzBuzz = cleanedArr
+    .map(number => {
+      if (number % 5 == 0 && number % 3 == 0) {
+        return "FizzBuzz";
+      } else if (number % 3 == 0) {
+        return "Fizz";
+      } else if (number % 5 == 0) {
+        return "Buzz";
+      } else {
+        return number.toString();
+      }
+    })
+  return fizzBuzz;
 };
