@@ -17,7 +17,8 @@
  * @returns {string[]} A list of the employees quotes for the website
  */
 export const getEmployeeQuotes = (employeeArr) => {
-  // Write code here
+  const quoteArray = employeeArr.map(object => object.quote)
+  return quoteArray
 };
 
 /**
@@ -27,7 +28,8 @@ export const getEmployeeQuotes = (employeeArr) => {
  * @returns {{name: string, quote: string, yearsEmployed: number, isManagement: boolean}[]} An array containing only managers
  */
 export const getTheManagers = (employeeArr) => {
-  // Write code here
+  const managersArray = employeeArr.filter(object => object.isManagement)
+  return managersArray
 };
 
 /**
@@ -37,7 +39,8 @@ export const getTheManagers = (employeeArr) => {
  * @returns {number} The number of the keys on the object
  */
 export const getNumberOfKeys = (object) => {
-  // Write code here
+  const objectKeys = Object.keys(object)
+  return objectKeys.length
 };
 
 /* Intermediate Challenges */
@@ -50,7 +53,9 @@ export const getNumberOfKeys = (object) => {
  * @returns {{name: string, price: number, hasFreeShipping: boolean, quantity: number}} The most expensive item in the shopping basket
  */
 export const findMostExpensiveItem = (shoppingBasketArr) => {
-  // Write code here
+  const sortedByPrice = shoppingBasketArr.sort((a, b) => b.price - a.price)
+
+  return sortedByPrice[0]
 };
 
 /**
@@ -69,7 +74,12 @@ export const findMostExpensiveItem = (shoppingBasketArr) => {
  * @returns {{name: string, price: number, hasFreeShipping: boolean, quantity: number, totalPrice: number}[]} A new array where each object has had a total price added to it
  */
 export const settotalPrice = (shoppingBasketArr) => {
-  // Write code here
+  const shoppingBasketWithTotals = shoppingBasketArr.map(item => {
+    const newItem = { ...item }
+    newItem.totalPrice = newItem.price * newItem.quantity
+    return newItem
+  })
+  return shoppingBasketWithTotals
 };
 
 /**
@@ -79,7 +89,11 @@ export const settotalPrice = (shoppingBasketArr) => {
  * @returns {number} The total cost of the order
  */
 export const totalShoppingBasket = (shoppingBasketArr) => {
-  // Write code here
+  let grandTotal = 0
+  shoppingBasketArr.forEach(item => {
+    grandTotal += item.totalPrice
+  })
+  return grandTotal
 };
 
 /* Advanced Challenges */
@@ -92,7 +106,13 @@ export const totalShoppingBasket = (shoppingBasketArr) => {
  * @returns {{id: number, name: string, ingredients: string[], country: string}[]} An array of cleaned meal objects
  */
 export const getImportantKeys = (mealsArr) => {
-  // Write code here
+  const importantKeys = mealsArr.map(meal => {
+    const newMeal = { ...meal }
+    delete newMeal.timeStamp
+    delete newMeal.userCreated
+    return newMeal
+  })
+  return importantKeys
 };
 
 /**
@@ -106,7 +126,21 @@ export const getImportantKeys = (mealsArr) => {
  * @returns {{id: number, name: string, ingredients: string[], country: string, isVegetarian: boolean, timeToCook: number}[]}
  */
 export const setImportantKeys = (mealsArr) => {
-  // Write code here
+  const cleanedMealArr = mealsArr.map(meal => {
+    const newMeal = { ...meal }
+
+    if (!newMeal.hasOwnProperty('isVegetarian')) {
+      meal.isVegetarian = false;
+    }
+
+    if (!newMeal.hasOwnProperty('timeToCook')) {
+      meal.timeToCook = 15;
+    }
+
+    return newMeal
+  })
+
+  return cleanedMealArr
 };
 
 /* Expert Challenge */
@@ -138,5 +172,23 @@ export const setImportantKeys = (mealsArr) => {
  * }[]} A Cleaned array of cocktail data
  */
 export const cleanCocktailResponseData = (cocktailData) => {
-  // Write code here
+  const cleanedCocktailArr = cocktailData.map(cocktail => {
+    const ingredientsList = [
+      cocktail.strIngredient1, cocktail.strIngredient2, cocktail.strIngredient3, 
+      cocktail.strIngredient4, cocktail.strIngredient5, cocktail.strIngredient6
+    ]
+
+    const ingredientsClean = ingredientsList.filter(ingredient => ingredient !== null)
+
+    const newCocktail = {
+      id: cocktail.idDrink,
+      drink: cocktail.strDrink,
+      category: cocktail.strCategory,
+      alcoholic: cocktail.strAlcoholic,
+      instructions: cocktail.strInstructions,
+      ingredients: ingredientsClean
+    }
+    return newCocktail
+  })
+  return cleanedCocktailArr
 };
