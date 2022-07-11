@@ -17,9 +17,12 @@
  * @param {string} url - The url of the API to fetch from
  * @returns {{id: string, name: string, age: number, height: number, interests: string[], isEmployed: boolean}[]} The data from the API
  */
- export const getData = (url) => {
-  // Your code here
-};
+export const getData = (url) => {
+  return fetch(url)
+    .then(res => {
+      return res.json()
+    })
+}
 
 /**
  * A function which calls the API from the provided URL and returns just the list of names from each object.
@@ -28,7 +31,9 @@
  * @returns {string[]} The list of names from the API
  */
 export const getNames = (url) => {
-  // Your code here
+  return fetch(url)
+    .then(res => res.json())
+    .then(data => data.map(person => person.name))
 };
 
 /**
@@ -38,7 +43,9 @@ export const getNames = (url) => {
  * @return {{id: string, name: string, age: number, height: number, interests: string[], isEmployed: boolean}[]} The employed people from the API
  */
 export const getEmployedPeople = (url) => {
-  // Your code here
+  return fetch(url)
+    .then(res => res.json())
+    .then(data => data.filter(person => person.isEmployed))
 };
 
 /* Intermediate Challenges */
@@ -52,8 +59,13 @@ export const getEmployedPeople = (url) => {
  * @returns {{id: string, name: string, age: number, height: number, interests: string[], isEmployed: boolean} | string} A person object OR A string saying "Person not found"
  */
 export const findPersonWithId = (url, id) => {
-  // Your code here
-};
+  return fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const matchingPerson = data.find(person => person.id === id)
+      return matchingPerson ? matchingPerson : "Person not found"
+    })
+}
 
 /**
  * A function which takes a url and an interest. It will fetch from an API at the url and return people who have a
@@ -64,8 +76,15 @@ export const findPersonWithId = (url, id) => {
  * @returns {{id: string, name: string, age: number, height: number, interests: string[], isEmployed: boolean}[] | string} A group of person objects OR A string saying "No people with interest found"
  */
 export const getPeopleWithMatchingInterests = (url, interest) => {
-  // Your code here
-};
+  return fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const peopleWithMatchingInterests = data.filter(person => {
+        return person.interests.includes(interest)
+      })
+      return peopleWithMatchingInterests.length ? peopleWithMatchingInterests : "No people with interest found"
+    })
+}
 
 /* Advanced Challenges */
 
@@ -102,8 +121,30 @@ export const getPeopleWithMatchingInterests = (url, interest) => {
  * @returns {{id: string, name: string, age: number, height: number, interests: string[], isEmployed: boolean, decscription: string}[]} A group of person objects with added description key
  */
 export const setDescriptions = (url) => {
-  // Your code here
-};
+  return fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const peopleWithDescriptions = data.map(person => {
+        const newPerson = { ...person }
+        const interests = newPerson.interests.reduce((previous, current, index, array) => {
+          if (index === array.length - 1) {
+            return previous + ` and ${current}`
+          }
+          if (index === 0) {
+            return current
+          }
+          return previous + `, ${current}`
+        }, "")
+
+        const description = `My name is ${newPerson.name}, I am ${newPerson.age} years old and ${newPerson.height}cm tall. I enjoy ${interests}. ${newPerson.isEmployed ? "I am currently employed" : "I am not currently employed"}`
+
+        newPerson.description = description
+        return newPerson
+      })
+      return peopleWithDescriptions
+    })
+
+}
 
 /* Expert Challenges */
 
@@ -152,5 +193,23 @@ export const setDescriptions = (url) => {
  * }[]}
  */
 export const setInterestDetails = (peopleUrl, interestsUrl) => {
-  // Your code here
+  return fetch(peopleUrl)
+    .then(res => res.json())
+    .then(people => {
+      return fetch(interestsUrl)
+        .then(res => res.json())
+        .then(interests => {
+          const peopleWithComplexInterests = people.map(person => {
+            const newPerson = { ...person }
+
+            const newInterests = newPerson.interests.map(personInterest => {
+              return interests.find(interest => interest.interest === personInterest)
+            })
+
+            newPerson.interests = newInterests
+            return newPerson
+          })
+          return peopleWithComplexInterests
+        })
+    })
 };
